@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Product Launch Management System (PLMS) - Interactive Experience Portal with Visitor, Volunteer, and Admin Roles, Skincare Trial Counter, Live Demand Analytics, and Lucky Draw. Course project for VIT Vellore.">
+    <title>Grand Skincare Premiere 2026 | PLMS Launch Experience</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandPink: '#FF2A85',
+                        brandYellow: '#FFD600',
+                        brandBlue: '#0077FE',
+                        brandPurple: '#7B2CBF',
+                        brandGreen: '#10B981',
+                        brandOrange: '#FF6B00',
+                        darkBg: '#0F172A',
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FFFDF7;
+            background-image: 
+                radial-gradient(#FFD600 0.85px, transparent 0.85px), 
+                radial-gradient(#FF2A85 0.85px, #FFFDF7 0.85px);
+            background-size: 28px 28px;
+            background-position: 0 0, 14px 14px;
+        }
+
+        /* Neo-Brutalist Sharp Styling */
+        .vibrant-card {
+            background: #FFFFFF;
+            border: 3px solid #000000;
+            box-shadow: 6px 6px 0px #000000;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .vibrant-card:hover {
+            box-shadow: 8px 8px 0px #000000;
+        }
+
+        .vibrant-btn {
+            border: 2px solid #000000;
+            box-shadow: 4px 4px 0px #000000;
+            transition: all 0.12s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .vibrant-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #000000;
+        }
+
+        .vibrant-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #000000;
+        }
+
+        .badge {
+            border: 1.5px solid #000000;
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        /* Wheel of Fortune Pointer */
+        .wheel-pointer {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 16px solid transparent;
+            border-right: 16px solid transparent;
+            border-top: 28px solid #FF2A85;
+            filter: drop-shadow(0px 3px 0px #000000);
+            z-index: 20;
+        }
+
+        /* Confetti canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-gray-900 min-h-screen flex flex-col antialiased selection:bg-brandYellow selection:text-black">
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+    <!-- ============================================================== -->
+    <!-- 1. EVENT INTRO & ROLE SELECTOR OVERLAY (LOADING / ENTRY PAGE) -->
+    <!-- ============================================================== -->
+    <div id="entry-splash-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="vibrant-card max-w-4xl w-full p-6 sm:p-10 rounded-3xl bg-[#FFFDF7] my-auto">
+            
+            <!-- Event Hero Banner -->
+            <div class="text-center pb-6 border-b-4 border-black mb-8">
+                <div class="inline-flex items-center gap-2 bg-brandYellow text-black font-black text-xs px-3 py-1.5 rounded-full border-2 border-black mb-3 shadow">
+                    <span class="w-2.5 h-2.5 rounded-full bg-brandPink animate-ping"></span>
+                    <span>LIVE EVENT FLOOR &bull; GRAND PREMIERE</span>
+                </div>
+                <h1 class="text-3xl sm:text-5xl font-black text-black tracking-tight mb-2">
+                    Grand Skincare Premiere 2026 🚀
+                </h1>
+                <p class="text-sm sm:text-base font-bold text-gray-700 max-w-2xl mx-auto">
+                    Welcome to the official launch portal of Aura Botanica. Experience debuted clinical skincare formulations, live stage keynotes, volunteer dispatch, and exclusive launch gifts!
+                </p>
+                <div class="mt-4 flex flex-wrap justify-center items-center gap-3 text-xs font-black">
+                    <span class="bg-black text-white px-3 py-1 rounded-lg">📍 Grand Ballroom, MG Road</span>
+                    <span class="bg-brandPink text-white px-3 py-1 rounded-lg">📅 Today: 18:00 - 22:00</span>
+                    <span class="bg-brandBlue text-white px-3 py-1 rounded-lg">DBMS Project &bull; Joyce Blessinah S (25BCE2979) &bull; VIT Vellore</span>
+                </div>
+            </div>
+
+            <!-- Role Selection Prompt -->
+            <div class="text-center mb-6">
+                <h2 class="text-xl sm:text-2xl font-black text-black">Who is Entering the Launch Floor?</h2>
+                <p class="text-xs sm:text-sm font-bold text-gray-500 mt-1">Select your role to access your personalized interactive portal:</p>
+            </div>
+
+            <!-- 3 Role Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Role 1: VISITOR -->
+                <div onclick="selectUserRole('visitor')"
+                    class="vibrant-card p-6 rounded-3xl bg-gradient-to-b from-white to-pink-50 flex flex-col justify-between cursor-pointer group hover:bg-pink-100/60 transform hover:-translate-y-1">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-brandPink text-white flex items-center justify-center text-3xl font-black border-3 border-black shadow mb-4 group-hover:scale-110 transition-transform">
+                            🎟️
+                        </div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="badge bg-brandPink text-white text-[10px] font-black px-2 py-0.5 rounded">GUEST PASS</span>
+                            <span class="text-xs font-black text-gray-400">PUBLIC</span>
+                        </div>
+                        <h3 class="text-2xl font-black text-black mb-2">I am a Visitor</h3>
+                        <p class="text-xs font-bold text-gray-600 leading-relaxed mb-4">
+                            Explore newly debuted skincare items, find your skin match, see VIP guests, claim your welcome gift hamper, and spin the Lucky Wheel!
+                        </p>
+                    </div>
+                    <button class="vibrant-btn w-full bg-brandPink text-white font-extrabold py-3 rounded-xl text-xs flex items-center justify-center gap-2 mt-4">
+                        <span>Enter as Visitor</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Role 2: VOLUNTEER -->
+                <div onclick="selectUserRole('volunteer')"
+                    class="vibrant-card p-6 rounded-3xl bg-gradient-to-b from-white to-purple-50 flex flex-col justify-between cursor-pointer group hover:bg-purple-100/60 transform hover:-translate-y-1">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-brandPurple text-white flex items-center justify-center text-3xl font-black border-3 border-black shadow mb-4 group-hover:scale-110 transition-transform">
+                            🤝
+                        </div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="badge bg-brandPurple text-white text-[10px] font-black px-2 py-0.5 rounded">FLOOR CREW</span>
+                            <span class="text-xs font-black text-gray-400">OPERATIONS</span>
+                        </div>
+                        <h3 class="text-2xl font-black text-black mb-2">I am a Volunteer</h3>
+                        <p class="text-xs font-bold text-gray-600 leading-relaxed mb-4">
+                            View duty station assignments, see where help is urgently needed, log handed-out product samples, and report crowd surges.
+                        </p>
+                    </div>
+                    <button class="vibrant-btn w-full bg-brandPurple text-white font-extrabold py-3 rounded-xl text-xs flex items-center justify-center gap-2 mt-4">
+                        <span>Enter as Volunteer</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Role 3: ADMIN / BRAND LEAD -->
+                <div onclick="selectUserRole('admin')"
+                    class="vibrant-card p-6 rounded-3xl bg-gradient-to-b from-white to-yellow-50 flex flex-col justify-between cursor-pointer group hover:bg-yellow-100/60 transform hover:-translate-y-1">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-brandYellow text-black flex items-center justify-center text-3xl font-black border-3 border-black shadow mb-4 group-hover:scale-110 transition-transform">
+                            ⚡
+                        </div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="badge bg-black text-brandYellow text-[10px] font-black px-2 py-0.5 rounded">LEADERSHIP</span>
+                            <span class="text-xs font-black text-gray-400">ANALYTICS</span>
+                        </div>
+                        <h3 class="text-2xl font-black text-black mb-2">I am an Admin</h3>
+                        <p class="text-xs font-bold text-gray-600 leading-relaxed mb-4">
+                            Monitor real-time product demand surges, see how many have tried each formula, manage volunteer shifts, and monitor inventory.
+                        </p>
+                    </div>
+                    <button class="vibrant-btn w-full bg-brandYellow text-black font-extrabold py-3 rounded-xl text-xs flex items-center justify-center gap-2 mt-4">
+                        <span>Enter as Admin</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Footer Quick Info -->
+            <div class="mt-8 pt-4 border-t-2 border-black/20 flex flex-col sm:flex-row justify-between items-center text-xs font-bold text-gray-500 gap-2">
+                <span>⚡ You can switch roles at any time from the top navigation bar!</span>
+                <span class="text-black font-extrabold">Product Launch Management System &bull; Java + MySQL &bull; VIT Vellore</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- 2. STICKY APP HEADER & NAVIGATION -->
+    <!-- ============================================================== -->
+    <header class="bg-gradient-to-r from-brandPink via-brandYellow to-brandBlue border-b-4 border-black p-3.5 shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <button onclick="reopenSplashModal()" class="bg-black text-brandYellow p-2.5 rounded-2xl font-black text-xl border-2 border-white shadow-md hover:scale-105 transition" title="Switch Launch Event / Role">
+                    🚀
+                </button>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h2 class="text-xl sm:text-2xl font-black text-black tracking-tight">
+                            Grand Skincare Premiere
+                        </h2>
+                        <span id="current-role-pill" class="badge bg-black text-brandYellow text-[11px] font-black px-2.5 py-0.5 rounded-full">
+                            Role: Visitor
+                        </span>
+                    </div>
+                    <p class="text-[11px] font-bold text-gray-900 bg-white/90 px-2 py-0.5 rounded-md inline-block mt-0.5 border border-black/20">
+                        DBMS Project &bull; Joyce Blessinah S (25BCE2979) &bull; <span class="font-black text-brandPink">VIT Vellore</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Header Controls: Switch Role & Live API Status -->
+            <div class="flex flex-wrap items-center gap-2">
+                <!-- Role Switcher Dropdown -->
+                <div class="flex border-2 border-black rounded-xl overflow-hidden bg-white shadow-sm">
+                    <button onclick="selectUserRole('visitor')" id="role-btn-visitor" class="px-3 py-1.5 text-xs font-black bg-brandPink text-white">
+                        🎟️ Visitor
+                    </button>
+                    <button onclick="selectUserRole('volunteer')" id="role-btn-volunteer" class="px-3 py-1.5 text-xs font-black bg-white text-black hover:bg-purple-50">
+                        🤝 Volunteer
+                    </button>
+                    <button onclick="selectUserRole('admin')" id="role-btn-admin" class="px-3 py-1.5 text-xs font-black bg-white text-black hover:bg-yellow-50">
+                        ⚡ Admin
+                    </button>
+                </div>
+
+                <!-- Sync API Status -->
+                <button onclick="fetchProductsFromApi()" class="vibrant-btn bg-brandYellow hover:bg-yellow-300 text-black font-extrabold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5">
+                    <i class="fa-solid fa-rotate" id="refresh-icon"></i>
+                    <span>Sync DB</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area with Dynamic Views -->
+    <main class="max-w-7xl mx-auto w-full px-4 flex-1 py-6 pb-16">
+
+        <!-- ============================================================== -->
+        <!-- VIEW A: VISITOR EXPERIENCE PORTAL -->
+        <!-- ============================================================== -->
+        <section id="portal-visitor" class="space-y-8 block">
+            
+            <!-- Visitor Welcome Hero & Gift Hamper Teaser -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Welcome Banner -->
+                <div class="lg:col-span-2 vibrant-card p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-pink-50 via-white to-yellow-50 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="badge bg-brandPink text-white text-xs font-black px-3 py-0.5 rounded-full">
+                                TODAY'S LAUNCH GALA
+                            </span>
+                            <span class="text-xs font-bold text-gray-500">Hall A &bull; Booths 1-8</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-4xl font-black text-black mb-3">
+                            Experience Today's Skincare Debut ✨
+                        </h2>
+                        <p class="text-xs sm:text-sm font-bold text-gray-600 max-w-xl leading-relaxed mb-4">
+                            Sample fresh clinical formulations created for every skin type. Tap <span class="text-brandPink font-black">"I Want to Try This"</span> to log your tester sample and unlock your complimentary Launch Goodie Bag!
+                        </p>
+                    </div>
+
+                    <!-- Quick Visitor Stats -->
+                    <div class="grid grid-cols-3 gap-3 pt-4 border-t-2 border-black/10">
+                        <div>
+                            <p class="text-[10px] font-bold text-gray-500 uppercase">Debuting Formulas</p>
+                            <p class="text-xl font-black text-black" id="vis-stat-formulas">8 Items</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold text-gray-500 uppercase">You've Tested</p>
+                            <p class="text-xl font-black text-brandPink" id="vis-stat-tested">0 Products</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold text-gray-500 uppercase">Hamper Status</p>
+                            <p class="text-xs font-black text-green-700 bg-green-100 px-2 py-1 rounded inline-block mt-1">Claim Ready 🎁</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Launch Hamper Unboxing Card -->
+                <div class="vibrant-card p-6 rounded-3xl bg-gradient-to-b from-yellow-100 to-white flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="badge bg-black text-brandYellow text-xs font-black px-2.5 py-0.5 rounded-md">FREE GALA GIFT</span>
+                            <span class="text-xs font-black text-brandPink">Worth ₹1,299</span>
+                        </div>
+                        <h3 class="text-xl font-black text-black mb-1">Your Launch Hamper 🎁</h3>
+                        <p class="text-xs font-bold text-gray-600 mb-3">Every verified attendee takes home this premiere beauty box:</p>
+                        
+                        <ul class="space-y-1.5 text-xs font-bold text-gray-800 bg-white/80 p-3 rounded-2xl border border-black/20">
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-green-600"></i>
+                                <span>Travel Hyaluronic Cleanser (50ml)</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-green-600"></i>
+                                <span>Cica Soothing Mini Balm</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-green-600"></i>
+                                <span>Signature Pink Velvet Vanity Pouch</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-green-600"></i>
+                                <span>20% Next-Purchase VIP Coupon</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button onclick="claimHamper()" id="btn-claim-hamper" class="vibrant-btn w-full bg-brandYellow hover:bg-yellow-300 text-black font-black py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 mt-4">
+                        <i class="fa-solid fa-gift"></i>
+                        <span>Claim My Launch Hamper</span>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Skincare Trial Bar: "What do you want to try here?" -->
+            <div class="vibrant-card p-6 sm:p-8 rounded-3xl">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b-2 border-black">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-2xl font-black text-black">Interactive Skincare Trial Bar</h3>
+                            <span class="badge bg-brandPink text-white text-xs font-black px-2.5 py-0.5 rounded-full">Sample & Rate</span>
+                        </div>
+                        <p class="text-xs font-bold text-gray-500 mt-1">
+                            Click <span class="text-brandPink font-bold">"Try Sample"</span> to test a formulation at the live booths. Each tap increments the live demand counter!
+                        </p>
+                    </div>
+
+                    <!-- Skin Filter Chips -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-xs font-black text-gray-500 mr-1">Filter Skin Type:</span>
+                        <button onclick="filterVisitorProducts('ALL')" class="badge bg-black text-white px-2.5 py-1 rounded-lg text-xs font-bold hover:opacity-90">All</button>
+                        <button onclick="filterVisitorProducts('Oily')" class="badge bg-pink-100 text-brandPink px-2.5 py-1 rounded-lg text-xs font-bold hover:bg-pink-200">Oily</button>
+                        <button onclick="filterVisitorProducts('Dry')" class="badge bg-blue-100 text-brandBlue px-2.5 py-1 rounded-lg text-xs font-bold hover:bg-blue-200">Dry</button>
+                        <button onclick="filterVisitorProducts('Combination')" class="badge bg-purple-100 text-brandPurple px-2.5 py-1 rounded-lg text-xs font-bold hover:bg-purple-200">Combination</button>
+                    </div>
+                </div>
+
+                <!-- Products Grid for Visitors -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="visitor-products-grid">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Two-Column Interactive Row: Stage VIP Keynotes & Lucky Wheel -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Section 1: Today's VIP Guests & Keynote Stage -->
+                <div class="vibrant-card p-6 rounded-3xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4 pb-3 border-b-2 border-black">
+                            <div>
+                                <h3 class="text-xl font-black text-black">Today's Stage & VIP Guests</h3>
+                                <p class="text-xs font-bold text-gray-500">Live Keynotes & Product Demos</p>
+                            </div>
+                            <span class="badge bg-brandBlue text-white text-xs font-black px-3 py-1 rounded-full">
+                                4 Stage Events
+                            </span>
+                        </div>
+
+                        <!-- Schedule Items -->
+                        <div class="space-y-3.5">
+                            <div class="p-3.5 rounded-2xl border-2 border-black bg-yellow-50 flex items-start gap-3">
+                                <div class="bg-black text-brandYellow font-mono font-black text-xs px-2.5 py-1 rounded-lg">
+                                    18:30
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center">
+                                        <h4 class="text-sm font-black text-black">Opening Keynote & Clinical Reveal</h4>
+                                        <span class="badge bg-brandPink text-white text-[10px] font-bold px-2 py-0.5 rounded">Keynote</span>
+                                    </div>
+                                    <p class="text-xs font-semibold text-gray-600 mt-0.5">
+                                        Host: <span class="font-extrabold text-black">Joyce Blessinah S</span> (Brand Lead & Event Director &bull; VIT Vellore)
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="p-3.5 rounded-2xl border-2 border-black bg-blue-50 flex items-start gap-3">
+                                <div class="bg-black text-brandBlue font-mono font-black text-xs px-2.5 py-1 rounded-lg">
+                                    19:15
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center">
+                                        <h4 class="text-sm font-black text-black">The Science of Ceramide Barriers</h4>
+                                        <span class="badge bg-brandBlue text-white text-[10px] font-bold px-2 py-0.5 rounded">Dermatology</span>
+                                    </div>
+                                    <p class="text-xs font-semibold text-gray-600 mt-0.5">
+                                        Guest Speaker: <span class="font-extrabold text-black">Dr. Anita Rao</span> (Senior Dermatologist)
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="p-3.5 rounded-2xl border-2 border-black bg-purple-50 flex items-start gap-3">
+                                <div class="bg-black text-brandPurple font-mono font-black text-xs px-2.5 py-1 rounded-lg">
+                                    20:00
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center">
+                                        <h4 class="text-sm font-black text-black">Live Glow Routine Demonstration</h4>
+                                        <span class="badge bg-brandPurple text-white text-[10px] font-bold px-2 py-0.5 rounded">Beauty Demo</span>
+                                    </div>
+                                    <p class="text-xs font-semibold text-gray-600 mt-0.5">
+                                        Creator: <span class="font-extrabold text-black">Vikram Seth</span> (Beauty Content Creator)
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="p-3.5 rounded-2xl border-2 border-black bg-green-50 flex items-start gap-3">
+                                <div class="bg-black text-brandGreen font-mono font-black text-xs px-2.5 py-1 rounded-lg">
+                                    21:00
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center">
+                                        <h4 class="text-sm font-black text-black">Grand Lucky Draw Ceremony</h4>
+                                        <span class="badge bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">Main Stage</span>
+                                    </div>
+                                    <p class="text-xs font-semibold text-gray-600 mt-0.5">
+                                        VIP Guests & Attendees Lucky Draw Prize Announcements!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Interactive Lucky Spin Wheel -->
+                <div class="vibrant-card p-6 rounded-3xl bg-gradient-to-br from-pink-50 via-white to-yellow-50 flex flex-col items-center justify-between text-center">
+                    <div class="w-full">
+                        <div class="flex justify-between items-center mb-3 pb-3 border-b-2 border-black w-full">
+                            <div class="text-left">
+                                <h3 class="text-xl font-black text-black">Launch Lucky Spin 🎡</h3>
+                                <p class="text-xs font-bold text-gray-500">Spin once to win exclusive skincare gifts!</p>
+                            </div>
+                            <span class="badge bg-brandYellow text-black text-xs font-black px-2.5 py-1 rounded-md">
+                                1 Free Spin
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Canvas Wheel Container -->
+                    <div class="relative my-4 flex items-center justify-center">
+                        <div class="wheel-pointer"></div>
+                        <canvas id="wheel-canvas" width="280" height="280" class="border-4 border-black rounded-full shadow-lg bg-white"></canvas>
+                    </div>
+
+                    <!-- Spin Controls & Outcome -->
+                    <div class="w-full pt-2">
+                        <p id="spin-result-text" class="text-xs font-black text-brandPink min-h-[20px] mb-2">
+                            Ready to spin! Tap the button below to test your luck.
+                        </p>
+                        <button onclick="spinWheel()" id="btn-spin-wheel" class="vibrant-btn w-full bg-brandPink hover:bg-pink-600 text-white font-black py-3 rounded-xl text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                            <span>SPIN THE LUCKY WHEEL NOW</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- VIEW B: VOLUNTEER & CREW PORTAL -->
+        <!-- ============================================================== -->
+        <section id="portal-volunteer" class="space-y-8 hidden">
+            
+            <!-- Volunteer Header & Status -->
+            <div class="vibrant-card p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-purple-50 via-white to-pink-50">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="badge bg-brandPurple text-white text-xs font-black px-3 py-0.5 rounded-full">
+                                VOLUNTEER OPERATIONS DESK
+                            </span>
+                            <span class="text-xs font-bold text-gray-500">Grand Ballroom Shift #1</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-black text-black">
+                            Floor Operations & Duty Roster 📋
+                        </h2>
+                        <p class="text-xs sm:text-sm font-bold text-gray-600 mt-1">
+                            Monitor real-time attendee requests, sample inventory replenishment, and station assignments.
+                        </p>
+                    </div>
+
+                    <!-- Quick Shift Check-in -->
+                    <div class="flex items-center gap-3">
+                        <div class="text-right hidden sm:block">
+                            <p class="text-[10px] font-bold text-gray-500 uppercase">Duty Status</p>
+                            <p class="text-xs font-black text-green-600" id="vol-duty-status">Active on Floor (Checked In)</p>
+                        </div>
+                        <button onclick="toggleVolunteerCheckIn()" id="btn-vol-checkin" class="vibrant-btn bg-green-500 text-white font-extrabold px-4 py-2 rounded-xl text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-clock"></i>
+                            <span id="btn-vol-checkin-text">Check Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Where Help is Needed URGENTLY -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Urgent Help Dispatch Board -->
+                <div class="lg:col-span-2 vibrant-card p-6 rounded-3xl">
+                    <div class="flex justify-between items-center mb-4 pb-3 border-b-2 border-black">
+                        <div>
+                            <h3 class="text-xl font-black text-black flex items-center gap-2">
+                                <span>Where Help is Needed Now</span>
+                                <span class="w-3 h-3 rounded-full bg-red-500 animate-pulse"></span>
+                            </h3>
+                            <p class="text-xs font-bold text-gray-500">Live floor alerts needing immediate staff attention</p>
+                        </div>
+                        <span class="badge bg-red-500 text-white text-xs font-black px-2.5 py-0.5 rounded-full" id="alert-count-badge">
+                            2 Active Requests
+                        </span>
+                    </div>
+
+                    <!-- Alert Cards -->
+                    <div class="space-y-3" id="volunteer-alerts-container">
+                        
+                        <div class="p-4 rounded-2xl border-2 border-black bg-red-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-red-500 text-white flex items-center justify-center font-bold text-lg border-2 border-black">
+                                    ⚠️
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <h4 class="text-sm font-black text-black">Booth #2 (Gel Cleansers) - Crowd Surge</h4>
+                                        <span class="badge bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded">URGENT</span>
+                                    </div>
+                                    <p class="text-xs font-semibold text-gray-700 mt-0.5">
+                                        High line of visitors testing Neem & Salicylic Wash. Need 2 volunteers to hand out sample cards and explain ingredients.
+                                    </p>
+                                </div>
+                            </div>
+                            <button onclick="claimVolunteerTask(this, 'Booth #2 Crowd Surge')" class="vibrant-btn bg-white hover:bg-gray-100 text-black font-extrabold px-3 py-1.5 rounded-xl text-xs whitespace-nowrap">
+                                I'll Help Here &rarr;
+                            </button>
+                        </div>
+
+                        <div class="p-4 rounded-2xl border-2 border-black bg-yellow-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-brandYellow text-black flex items-center justify-center font-bold text-lg border-2 border-black">
+                                    📦
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <h4 class="text-sm font-black text-black">Gift Hamper Assembly Table</h4>
+                                        <span class="badge bg-brandYellow text-black text-[10px] font-black px-2 py-0.5 rounded">Restock</span>
+                                    </div>
+                                    <p class="text-xs font-semibold text-gray-700 mt-0.5">
+                                        Need 50 more velvet pouches packed with travel mini cleansers before 19:30 VIP exit rush.
+                                    </p>
+                                </div>
+                            </div>
+                            <button onclick="claimVolunteerTask(this, 'Hamper Packing')" class="vibrant-btn bg-white hover:bg-gray-100 text-black font-extrabold px-3 py-1.5 rounded-xl text-xs whitespace-nowrap">
+                                I'll Help Here &rarr;
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Volunteer Quick Counter: Samples Handed Out -->
+                <div class="vibrant-card p-6 rounded-3xl bg-gradient-to-b from-purple-100 to-white flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="badge bg-brandPurple text-white text-xs font-black px-2.5 py-0.5 rounded-md">COUNTER</span>
+                            <span class="text-xs font-bold text-gray-500">Live Tap Log</span>
+                        </div>
+                        <h3 class="text-xl font-black text-black mb-1">Samples Distributed 🧴</h3>
+                        <p class="text-xs font-bold text-gray-600 mb-4">Tap every time you hand a trial tube or gift bag to an attendee:</p>
+
+                        <div class="text-center py-4 bg-white rounded-2xl border-2 border-black shadow mb-4">
+                            <p class="text-4xl font-black text-brandPurple" id="vol-sample-counter">142</p>
+                            <p class="text-[11px] font-bold text-gray-500 uppercase mt-1">Total Handed Out By Team</p>
+                        </div>
+                    </div>
+
+                    <button onclick="incrementSampleHandout()" class="vibrant-btn w-full bg-brandPurple hover:bg-purple-700 text-white font-black py-3 rounded-xl text-xs flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-plus text-base"></i>
+                        <span>+1 Sample Handed Out</span>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Assigned Volunteer Roster Table -->
+            <div class="vibrant-card p-6 rounded-3xl">
+                <div class="mb-4 pb-3 border-b-2 border-black">
+                    <h3 class="text-xl font-black text-black">Your Assigned Shift & Team Roster</h3>
+                    <p class="text-xs font-bold text-gray-500">Mapped directly from MySQL table <code class="text-brandPurple font-bold">STAFF_ASSIGNMENT</code> &bull; VIT Vellore</p>
+                </div>
+
+                <div class="overflow-x-auto rounded-2xl border-2 border-black">
+                    <table class="w-full text-left border-collapse text-xs font-semibold">
+                        <thead class="bg-black text-white uppercase font-black text-[11px]">
+                            <tr>
+                                <th class="p-3">Staff ID</th>
+                                <th class="p-3">Team Member</th>
+                                <th class="p-3">Assigned Role & Station</th>
+                                <th class="p-3">Shift Hours</th>
+                                <th class="p-3">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                            <tr>
+                                <td class="p-3 font-mono font-bold">#1</td>
+                                <td class="p-3 font-bold text-black">Joyce Blessinah S</td>
+                                <td class="p-3 font-bold text-brandPink">Event Director & Stage Lead</td>
+                                <td class="p-3">16:00 - 22:00</td>
+                                <td class="p-3"><span class="badge bg-green-100 text-green-800 px-2 py-0.5 rounded font-black">On Duty</span></td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-mono font-bold">#2</td>
+                                <td class="p-3 font-bold text-black">Rithika Sherlin</td>
+                                <td class="p-3 font-bold text-brandBlue">VIP Guest & Media Coordinator</td>
+                                <td class="p-3">16:30 - 22:00</td>
+                                <td class="p-3"><span class="badge bg-green-100 text-green-800 px-2 py-0.5 rounded font-black">On Duty</span></td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-mono font-bold">#8</td>
+                                <td class="p-3 font-bold text-black">Pooja Kulkarni</td>
+                                <td class="p-3 font-bold text-brandYellow text-black">Registration Desk Supervisor</td>
+                                <td class="p-3">17:00 - 21:00</td>
+                                <td class="p-3"><span class="badge bg-green-100 text-green-800 px-2 py-0.5 rounded font-black">On Duty</span></td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-mono font-bold">#12</td>
+                                <td class="p-3 font-bold text-black">Arun Kumar</td>
+                                <td class="p-3 font-bold text-purple-700">Booth #2 Sampling Assistant</td>
+                                <td class="p-3">18:00 - 21:30</td>
+                                <td class="p-3"><span class="badge bg-green-100 text-green-800 px-2 py-0.5 rounded font-black">On Duty</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- VIEW C: ADMIN / BRAND LEAD DEMAND ANALYTICS -->
+        <!-- ============================================================== -->
+        <section id="portal-admin" class="space-y-8 hidden">
+            
+            <!-- Admin Top Stats Bar -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="vibrant-card p-4 rounded-2xl bg-white">
+                    <p class="text-[10px] font-bold text-gray-500 uppercase">Live Headcount</p>
+                    <p class="text-3xl font-black text-black" id="admin-stat-headcount">380 / 500</p>
+                    <p class="text-[10px] font-bold text-green-600 mt-1">76% Venue Capacity</p>
+                </div>
+                <div class="vibrant-card p-4 rounded-2xl bg-white">
+                    <p class="text-[10px] font-bold text-gray-500 uppercase">Total Tester Trials</p>
+                    <p class="text-3xl font-black text-brandPink" id="admin-stat-trials">864</p>
+                    <p class="text-[10px] font-bold text-gray-500 mt-1">+18 in last 5 mins</p>
+                </div>
+                <div class="vibrant-card p-4 rounded-2xl bg-white">
+                    <p class="text-[10px] font-bold text-gray-500 uppercase">Top Trending Product</p>
+                    <p class="text-base font-black text-brandBlue truncate mt-1" id="admin-top-product">Neem & Salicylic Gel</p>
+                    <p class="text-[10px] font-bold text-brandBlue">Surge +44%</p>
+                </div>
+                <div class="vibrant-card p-4 rounded-2xl bg-white">
+                    <p class="text-[10px] font-bold text-gray-500 uppercase">Active Volunteers</p>
+                    <p class="text-3xl font-black text-brandPurple">14</p>
+                    <p class="text-[10px] font-bold text-green-600 mt-1">All Stations Covered</p>
+                </div>
+            </div>
+
+            <!-- "Which Product Creates Demands?": Live Surge Rankings -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Demand Rankings & Trial Surge -->
+                <div class="lg:col-span-2 vibrant-card p-6 rounded-3xl">
+                    <div class="flex justify-between items-center mb-6 pb-3 border-b-2 border-black">
+                        <div>
+                            <h3 class="text-xl font-black text-black">Which Products are Creating the Most Demand?</h3>
+                            <p class="text-xs font-bold text-gray-500">Live ranking calculated from attendee trial actions & sample taps</p>
+                        </div>
+                        <span class="badge bg-brandPink text-white text-xs font-black px-3 py-1 rounded-full">
+                            Live Demand Bar
+                        </span>
+                    </div>
+
+                    <!-- Live Demand Bars Container -->
+                    <div class="space-y-4" id="admin-demand-bars">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Quick Inventory & Restock Alert -->
+                <div class="vibrant-card p-6 rounded-3xl bg-gradient-to-b from-yellow-50 to-white flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4 pb-3 border-b-2 border-black">
+                            <h3 class="text-lg font-black text-black">Inventory Restock Watch</h3>
+                            <span class="badge bg-black text-brandYellow text-[10px] font-black px-2 py-0.5 rounded">RESTOCK</span>
+                        </div>
+                        <p class="text-xs font-bold text-gray-600 mb-4">
+                            Monitor units allocated for tonight's launch event. Reorder or move stock from warehouse when below threshold:
+                        </p>
+
+                        <div class="space-y-3" id="admin-stock-watchlist">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="pt-4 mt-4 border-t-2 border-black/10">
+                        <button onclick="simulateSurge()" class="vibrant-btn w-full bg-black text-brandYellow font-black py-2.5 rounded-xl text-xs flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span>Simulate Live Crowd Surge (+Trials)</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Full MySQL Database Explorer & Raw Management (The catalog table) -->
+            <div class="vibrant-card p-6 rounded-3xl">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4 pb-3 border-b-2 border-black">
+                    <div>
+                        <h3 class="text-xl font-black text-black">Master Inventory & Database Record Set</h3>
+                        <p class="text-xs font-bold text-gray-500">Connected to Java Server at <code class="font-bold text-brandPink">localhost:8080/api/products</code> &bull; VIT Vellore DBMS</p>
+                    </div>
+                    <button onclick="openAddProductModal()" class="vibrant-btn bg-brandPink text-white font-extrabold px-3.5 py-1.5 rounded-xl text-xs flex items-center gap-1.5">
+                        <i class="fa-solid fa-plus"></i> Add New Product to DB
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto rounded-2xl border-2 border-black">
+                    <table class="w-full text-left border-collapse text-xs font-semibold">
+                        <thead class="bg-black text-white uppercase font-black text-[11px]">
+                            <tr>
+                                <th class="p-3">ID</th>
+                                <th class="p-3">Skin Type</th>
+                                <th class="p-3">Formulation Name</th>
+                                <th class="p-3">Price</th>
+                                <th class="p-3">Shelf Life</th>
+                                <th class="p-3">Total Tested</th>
+                                <th class="p-3">Stock Units</th>
+                                <th class="p-3 text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-product-table-body" class="divide-y divide-gray-200 bg-white">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ============================================================== -->
+    <!-- MODAL: ADD PRODUCT FORM (ACCESSIBLE TO ADMIN) -->
+    <!-- ============================================================== -->
+    <div id="add-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="vibrant-card max-w-lg w-full p-6 rounded-3xl bg-white">
+            <div class="flex justify-between items-center pb-3 border-b-2 border-black mb-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-brandPink text-white flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                    <h3 class="text-xl font-black text-black">Add New Skincare Product</h3>
+                </div>
+                <button onclick="closeAddProductModal()" class="w-8 h-8 rounded-full border-2 border-black flex items-center justify-center font-black hover:bg-gray-100">
+                    ✕
+                </button>
+            </div>
+
+            <form id="product-form" onsubmit="handleProductSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-extrabold mb-1">Product ID *</label>
+                        <input type="number" id="form-id" required placeholder="e.g. 309"
+                            class="w-full border-2 border-black rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brandPink">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-extrabold mb-1">Skin Type *</label>
+                        <select id="form-skintype" required
+                            class="w-full border-2 border-black rounded-xl p-2.5 text-xs font-bold bg-white focus:outline-none focus:ring-2 focus:ring-brandPink">
+                            <option value="Oily">Oily</option>
+                            <option value="Dry">Dry</option>
+                            <option value="Combination">Combination</option>
+                            <option value="Normal">Normal</option>
+                            <option value="All">All Types</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold mb-1">Formulation Name / Category *</label>
+                    <input type="text" id="form-name" required placeholder="e.g. Ceramide Barrier Overnight Cream"
+                        class="w-full border-2 border-black rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brandPink">
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-extrabold mb-1">Price (₹) *</label>
+                        <input type="number" id="form-price" step="0.01" min="0" required placeholder="399.00"
+                            class="w-full border-2 border-black rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brandPink">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-extrabold mb-1">Shelf Life (Mos)</label>
+                        <input type="number" id="form-shelflife" value="24" min="1"
+                            class="w-full border-2 border-black rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brandPink">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-extrabold mb-1">Stock Units</label>
+                        <input type="number" id="form-stock" value="500" min="0"
+                            class="w-full border-2 border-black rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brandPink">
+                    </div>
+                </div>
+
+                <div class="pt-2 flex gap-3">
+                    <button type="button" onclick="closeAddProductModal()"
+                        class="vibrant-btn flex-1 bg-gray-100 text-black font-extrabold py-3 rounded-xl text-xs">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                        class="vibrant-btn flex-1 bg-brandPink text-white font-extrabold py-3 rounded-xl text-xs">
+                        Save to Database
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t-2 border-black bg-white py-5">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs font-bold text-gray-700">
+            <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-brandPink border border-black"></span>
+                <span>Grand Skincare Premiere &bull; Product Launch Management System</span>
+            </div>
+            <div>
+                DBMS Portfolio Project &bull; <span class="text-black font-black">Joyce Blessinah S</span> (25BCE2979) &bull; <span class="font-extrabold text-black">VIT Vellore</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================== -->
+    <!-- APPLICATION JAVASCRIPT & STATE ENGINE -->
+    <!-- ============================================================== -->
+    <script>
+        // Core Reactive Application State
+        const state = {
+            currentRole: 'visitor', // 'visitor', 'volunteer', 'admin'
+            testedCountByVisitor: 0,
+            hasClaimedHamper: false,
+            hasSpunWheel: false,
+            volunteerCheckedIn: true,
+            totalSamplesGivenByTeam: 142,
+            products: [
+                { id: 301, skinType: 'Oily', category: 'Neem & Salicylic Gel Wash', price: 299.00, shelfLife: 24, stock: 750, trials: 420, rating: 4.9 },
+                { id: 302, skinType: 'Dry', category: 'Hydrating Hyaluronic Cleanser', price: 349.00, shelfLife: 24, stock: 600, trials: 340, rating: 4.8 },
+                { id: 303, skinType: 'All', category: 'Gentle Cica Foaming Wash', price: 399.00, shelfLife: 18, stock: 500, trials: 285, rating: 5.0 },
+                { id: 304, skinType: 'Combination', category: 'Vitamin C Brightening Wash', price: 279.00, shelfLife: 12, stock: 800, trials: 260, rating: 4.7 },
+                { id: 305, skinType: 'Normal', category: 'Tea Tree Charcoal Cleanser', price: 325.00, shelfLife: 24, stock: 450, trials: 210, rating: 4.6 },
+                { id: 306, skinType: 'Oily', category: 'Niacinamide 10% Blemish Serum', price: 499.00, shelfLife: 24, stock: 400, trials: 390, rating: 4.9 },
+                { id: 307, skinType: 'Dry', category: 'Ceramide Barrier Relief Cream', price: 449.00, shelfLife: 18, stock: 350, trials: 310, rating: 4.8 },
+                { id: 308, skinType: 'All', category: 'Broad Spectrum SPF 50 Gel Sunscreen', price: 399.00, shelfLife: 24, stock: 900, trials: 450, rating: 5.0 }
+            ],
+            wheelPrizes: [
+                { label: 'Free Travel Cleanser 🧴', color: '#FF2A85' },
+                { label: '25% VIP Discount 🏷️', color: '#FFD600' },
+                { label: 'Cica Soothing Mini 🌿', color: '#0077FE' },
+                { label: 'Pink Velvet Pouch 👛', color: '#7B2CBF' },
+                { label: 'Derm Consultation 🩺', color: '#10B981' },
+                { label: 'Mystery Goodie Box 🎁', color: '#FF6B00' }
+            ]
+        };
+
+        // --- Role Selection Engine ---
+        function selectUserRole(role) {
+            state.currentRole = role;
+            
+            // Close splash overlay
+            document.getElementById('entry-splash-modal').classList.add('hidden');
+
+            // Hide all portals
+            document.getElementById('portal-visitor').classList.add('hidden');
+            document.getElementById('portal-volunteer').classList.add('hidden');
+            document.getElementById('portal-admin').classList.add('hidden');
+
+            // Show selected portal
+            document.getElementById(`portal-${role}`).classList.remove('hidden');
+
+            // Update Header Role Pill & Switcher Buttons
+            const pill = document.getElementById('current-role-pill');
+            const btnVis = document.getElementById('role-btn-visitor');
+            const btnVol = document.getElementById('role-btn-volunteer');
+            const btnAdm = document.getElementById('role-btn-admin');
+
+            btnVis.className = "px-3 py-1.5 text-xs font-black bg-white text-black hover:bg-pink-50";
+            btnVol.className = "px-3 py-1.5 text-xs font-black bg-white text-black hover:bg-purple-50";
+            btnAdm.className = "px-3 py-1.5 text-xs font-black bg-white text-black hover:bg-yellow-50";
+
+            if (role === 'visitor') {
+                pill.className = "badge bg-brandPink text-white text-[11px] font-black px-2.5 py-0.5 rounded-full";
+                pill.innerText = "Role: 🎟️ Visitor";
+                btnVis.className = "px-3 py-1.5 text-xs font-black bg-brandPink text-white";
+                renderVisitorProducts('ALL');
+                initWheel();
+                showToast("Switched to Visitor Experience Portal!", 'info');
+            } else if (role === 'volunteer') {
+                pill.className = "badge bg-brandPurple text-white text-[11px] font-black px-2.5 py-0.5 rounded-full";
+                pill.innerText = "Role: 🤝 Volunteer";
+                btnVol.className = "px-3 py-1.5 text-xs font-black bg-brandPurple text-white";
+                showToast("Switched to Floor Volunteer & Dispatch Portal!", 'info');
+            } else if (role === 'admin') {
+                pill.className = "badge bg-brandYellow text-black text-[11px] font-black px-2.5 py-0.5 rounded-full";
+                pill.innerText = "Role: ⚡ Admin Lead";
+                btnAdm.className = "px-3 py-1.5 text-xs font-black bg-brandYellow text-black";
+                renderAdminAnalytics();
+                showToast("Switched to Admin Demand Analytics & Restock Portal!", 'info');
+            }
+        }
+
+        function reopenSplashModal() {
+            document.getElementById('entry-splash-modal').classList.remove('hidden');
+        }
+
+        // --- Visitor: Render Products Trial Bar ---
+        function renderVisitorProducts(skinFilter = 'ALL') {
+            const grid = document.getElementById('visitor-products-grid');
+            const filtered = skinFilter === 'ALL' 
+                ? state.products 
+                : state.products.filter(p => p.skinType.toLowerCase() === skinFilter.toLowerCase() || p.skinType.toLowerCase() === 'all');
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="vibrant-card p-5 rounded-2xl flex flex-col justify-between bg-white hover:bg-pink-50/30 transition-all">
+                    <div>
+                        <div class="flex justify-between items-start gap-2 mb-2">
+                            <span class="badge ${p.skinType === 'Oily' ? 'bg-pink-100 text-brandPink border-brandPink' : p.skinType === 'Dry' ? 'bg-blue-100 text-brandBlue border-brandBlue' : 'bg-yellow-100 text-amber-800 border-amber-500'} text-[10px] font-black px-2 py-0.5 rounded">
+                                ${p.skinType}
+                            </span>
+                            <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star"></i> ${p.rating}</span>
+                        </div>
+                        <h4 class="font-black text-black text-sm mb-1 leading-snug">${p.category}</h4>
+                        <div class="text-[11px] font-bold text-gray-500 flex items-center gap-2 mb-3">
+                            <span>₹${Number(p.price).toFixed(2)}</span>
+                            <span>&bull;</span>
+                            <span class="text-brandPink font-black"><i class="fa-solid fa-fire"></i> ${p.trials} tried</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="tryProductSample(${p.id}, '${p.category}')" class="vibrant-btn w-full bg-black hover:bg-brandPink text-white font-extrabold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+                        <i class="fa-solid fa-hand-holding-droplet text-brandYellow"></i>
+                        <span>I Want to Try This</span>
+                    </button>
+                </div>
+            `).join('');
+
+            document.getElementById('vis-stat-formulas').innerText = `${state.products.length} Items`;
+        }
+
+        function filterVisitorProducts(type) {
+            renderVisitorProducts(type);
+        }
+
+        // --- Visitor Action: "I Want to Try This" ---
+        function tryProductSample(id, name) {
+            const item = state.products.find(p => p.id === id);
+            if (item) {
+                item.trials += 1;
+                state.testedCountByVisitor += 1;
+                document.getElementById('vis-stat-tested').innerText = `${state.testedCountByVisitor} Products`;
+
+                playChimeSound(600, 0.1);
+                showToast(`Sample logged for "${name}"! (Total Tried: ${item.trials})`, 'success');
+
+                // Re-render current view if on visitor or admin
+                if (state.currentRole === 'visitor') renderVisitorProducts();
+                if (state.currentRole === 'admin') renderAdminAnalytics();
+            }
+        }
+
+        // --- Visitor Action: Claim Hamper ---
+        function claimHamper() {
+            if (state.hasClaimedHamper) {
+                showToast("You have already claimed your Launch Hamper!", 'info');
+                return;
+            }
+            state.hasClaimedHamper = true;
+            const btn = document.getElementById('btn-claim-hamper');
+            btn.className = "vibrant-btn w-full bg-green-500 text-white font-black py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 mt-4 opacity-90 cursor-default";
+            btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>Hamper Claimed! (Ticket #VIT-${Math.floor(1000 + Math.random() * 9000)})</span>`;
+            
+            triggerConfetti();
+            playFanfareSound();
+            showToast("Congratulations! Your Launch Gift Hamper is confirmed for pickup at Desk #1!", 'success');
+        }
+
+        // --- Lucky Spin Wheel Canvas Engine ---
+        let currentWheelAngle = 0;
+        let isSpinning = false;
+
+        function initWheel() {
+            const canvas = document.getElementById('wheel-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = canvas.width / 2 - 10;
+            const numSlices = state.wheelPrizes.length;
+            const arcSize = (2 * Math.PI) / numSlices;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < numSlices; i++) {
+                const angle = currentWheelAngle + i * arcSize;
+                ctx.beginPath();
+                ctx.fillStyle = state.wheelPrizes[i].color;
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, angle, angle + arcSize);
+                ctx.lineTo(centerX, centerY);
+                ctx.fill();
+                ctx.strokeStyle = '#000000';
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+
+                // Draw Text
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(angle + arcSize / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#FFFFFF";
+                ctx.font = "bold 11px 'Plus Jakarta Sans'";
+                ctx.shadowColor = "#000000";
+                ctx.shadowBlur = 4;
+                ctx.fillText(state.wheelPrizes[i].label, radius - 15, 4);
+                ctx.restore();
+            }
+
+            // Center Pin
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 22, 0, 2 * Math.PI);
+            ctx.fillStyle = '#000000';
+            ctx.fill();
+            ctx.strokeStyle = '#FFFFFF';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            ctx.fillStyle = '#FFD600';
+            ctx.font = "bold 10px 'Plus Jakarta Sans'";
+            ctx.textAlign = "center";
+            ctx.fillText("SPIN", centerX, centerY + 3.5);
+        }
+
+        function spinWheel() {
+            if (isSpinning) return;
+            if (state.hasSpunWheel) {
+                showToast("You have already used your 1 free launch spin!", 'info');
+                return;
+            }
+
+            isSpinning = true;
+            state.hasSpunWheel = true;
+            document.getElementById('btn-spin-wheel').disabled = true;
+            document.getElementById('spin-result-text').innerText = "Wheel is spinning fast...";
+
+            const spinRotations = 5 + Math.random() * 4;
+            const targetExtra = Math.random() * 2 * Math.PI;
+            const totalRotation = spinRotations * 2 * Math.PI + targetExtra;
+            const duration = 4000;
+            const startTime = performance.now();
+
+            function animate(time) {
+                const elapsed = time - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease Out Cubic
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                currentWheelAngle = easeOut * totalRotation;
+                initWheel();
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    isSpinning = false;
+                    // Determine Prize at 12 o'clock (top, pointer is at 3*PI/2)
+                    const numSlices = state.wheelPrizes.length;
+                    const arcSize = (2 * Math.PI) / numSlices;
+                    const normalizedAngle = (1.5 * Math.PI - (currentWheelAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+                    const winningIndex = Math.floor(normalizedAngle / arcSize) % numSlices;
+                    const prize = state.wheelPrizes[winningIndex];
+
+                    document.getElementById('spin-result-text').innerText = `🎉 WON: ${prize.label}! Present your screen at the redemption desk!`;
+                    triggerConfetti();
+                    playFanfareSound();
+                    showToast(`You won: ${prize.label}!`, 'success');
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        // --- Volunteer Features ---
+        function toggleVolunteerCheckIn() {
+            state.volunteerCheckedIn = !state.volunteerCheckedIn;
+            const statusText = document.getElementById('vol-duty-status');
+            const btnText = document.getElementById('btn-vol-checkin-text');
+            const btn = document.getElementById('btn-vol-checkin');
+
+            if (state.volunteerCheckedIn) {
+                statusText.innerText = "Active on Floor (Checked In)";
+                statusText.className = "text-xs font-black text-green-600";
+                btnText.innerText = "Check Out";
+                btn.className = "vibrant-btn bg-green-500 text-white font-extrabold px-4 py-2 rounded-xl text-xs flex items-center gap-2";
+                showToast("Checked in to Floor Shift!", 'success');
+            } else {
+                statusText.innerText = "On Break / Off-Duty";
+                statusText.className = "text-xs font-black text-gray-500";
+                btnText.innerText = "Check In";
+                btn.className = "vibrant-btn bg-black text-white font-extrabold px-4 py-2 rounded-xl text-xs flex items-center gap-2";
+                showToast("Checked out of shift. Enjoy your break!", 'info');
+            }
+        }
+
+        function incrementSampleHandout() {
+            state.totalSamplesGivenByTeam += 1;
+            document.getElementById('vol-sample-counter').innerText = state.totalSamplesGivenByTeam;
+            playChimeSound(700, 0.08);
+            showToast("Logged +1 sample handout! Keep up the great work!", 'success');
+        }
+
+        function claimVolunteerTask(btn, taskName) {
+            btn.className = "badge bg-green-500 text-white font-black px-3 py-1 rounded-lg text-xs";
+            btn.innerText = "Assigned to You ✓";
+            btn.disabled = true;
+            showToast(`You have taken responsibility for: ${taskName}!`, 'success');
+        }
+
+        // --- Admin Demand Analytics ---
+        function renderAdminAnalytics() {
+            // Sort products by demand (trials descending)
+            const sortedByDemand = [...state.products].sort((a, b) => b.trials - a.trials);
+            const maxTrials = sortedByDemand[0] ? sortedByDemand[0].trials : 500;
+
+            const demandBarsContainer = document.getElementById('admin-demand-bars');
+            demandBarsContainer.innerHTML = sortedByDemand.map((p, idx) => {
+                const pct = Math.round((p.trials / maxTrials) * 100);
+                return `
+                    <div>
+                        <div class="flex justify-between items-center text-xs font-extrabold mb-1">
+                            <span class="flex items-center gap-2">
+                                <span class="badge ${idx === 0 ? 'bg-brandPink text-white' : idx === 1 ? 'bg-brandYellow text-black' : 'bg-gray-100 text-gray-800'} text-[10px] font-black px-1.5 py-0.2 rounded">#${idx + 1}</span>
+                                <span class="text-black font-black">${p.category}</span>
+                                <span class="text-gray-400 font-mono text-[10px] font-bold">(${p.skinType})</span>
+                            </span>
+                            <span class="text-brandPink font-black">${p.trials} trials (${pct}%)</span>
+                        </div>
+                        <div class="w-full bg-gray-200 h-3 rounded-full border border-black overflow-hidden">
+                            <div class="h-full rounded-full ${idx === 0 ? 'bg-gradient-to-r from-brandPink to-brandYellow' : 'bg-black'}" style="width: ${pct}%"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Restock Watchlist (products below stock threshold)
+            const watchlist = document.getElementById('admin-stock-watchlist');
+            const lowStockItems = state.products.filter(p => p.stock < 550);
+            watchlist.innerHTML = lowStockItems.map(p => `
+                <div class="p-2.5 bg-white rounded-xl border border-black flex justify-between items-center text-xs font-bold">
+                    <div>
+                        <span class="font-black text-black block">${p.category}</span>
+                        <span class="text-[10px] text-gray-500">Remaining: <b class="text-red-600">${p.stock} units</b></span>
+                    </div>
+                    <button onclick="restockProduct(${p.id})" class="badge bg-brandYellow hover:bg-yellow-300 text-black px-2 py-1 rounded text-[10px] font-black">
+                        +100 Stock
+                    </button>
+                </div>
+            `).join('');
+
+            // Admin Master Inventory Table
+            const tbody = document.getElementById('admin-product-table-body');
+            tbody.innerHTML = state.products.map(p => `
+                <tr class="hover:bg-yellow-50/60">
+                    <td class="p-3 font-mono font-bold">#${p.id}</td>
+                    <td class="p-3"><span class="badge bg-gray-100 px-2 py-0.5 rounded text-[10px] font-bold">${p.skinType}</span></td>
+                    <td class="p-3 font-extrabold text-black">${p.category}</td>
+                    <td class="p-3 font-bold text-brandBlue">₹${Number(p.price).toFixed(2)}</td>
+                    <td class="p-3">${p.shelfLife || 24} mos</td>
+                    <td class="p-3 font-extrabold text-brandPink">${p.trials}</td>
+                    <td class="p-3 font-bold">${p.stock}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:text-red-700 text-xs font-bold p-1">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Update top KPIs
+            const totalTrials = state.products.reduce((acc, p) => acc + p.trials, 0);
+            document.getElementById('admin-stat-trials').innerText = totalTrials;
+            if (sortedByDemand[0]) {
+                document.getElementById('admin-top-product').innerText = sortedByDemand[0].category;
+            }
+        }
+
+        function restockProduct(id) {
+            const p = state.products.find(item => item.id === id);
+            if (p) {
+                p.stock += 100;
+                renderAdminAnalytics();
+                showToast(`Restocked +100 units for "${p.category}"!`, 'success');
+            }
+        }
+
+        function simulateSurge() {
+            state.products.forEach(p => {
+                p.trials += Math.floor(5 + Math.random() * 15);
+            });
+            renderAdminAnalytics();
+            showToast("Simulated live crowd surge! Trial counters updated.", 'info');
+        }
+
+        // --- Fetch Live Products from Java Server (Server.java:8080) ---
+        async function fetchProductsFromApi() {
+            const refreshIcon = document.getElementById('refresh-icon');
+            refreshIcon.classList.add('fa-spin');
+
+            try {
+                const response = await fetch('http://localhost:8080/api/products', { mode: 'cors' });
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const liveData = await response.json();
+                if (Array.isArray(liveData) && liveData.length > 0) {
+                    state.products = liveData.map(p => {
+                        const existing = state.products.find(e => e.id === p.id);
+                        return {
+                            id: p.id,
+                            skinType: p.skinType,
+                            category: p.category,
+                            price: p.price,
+                            shelfLife: p.shelfLife || 24,
+                            stock: p.stock || 500,
+                            trials: existing ? existing.trials : Math.floor(200 + Math.random() * 200),
+                            rating: existing ? existing.rating : 4.8
+                        };
+                    });
+
+                    if (state.currentRole === 'visitor') renderVisitorProducts();
+                    if (state.currentRole === 'admin') renderAdminAnalytics();
+
+                    showToast(`Synced ${liveData.length} live records from MySQL!`, 'success');
+                }
+            } catch (err) {
+                console.warn("API offline or server standby.", err);
+                showToast("Using local active database state (Java server standby)", 'info');
+            } finally {
+                refreshIcon.classList.remove('fa-spin');
+            }
+        }
+
+        // --- Add Product Handling ---
+        function openAddProductModal() {
+            document.getElementById('add-modal').classList.remove('hidden');
+        }
+
+        function closeAddProductModal() {
+            document.getElementById('add-modal').classList.add('hidden');
+            document.getElementById('product-form').reset();
+        }
+
+        async function handleProductSubmit(e) {
+            e.preventDefault();
+
+            const newProduct = {
+                id: parseInt(document.getElementById('form-id').value),
+                skinType: document.getElementById('form-skintype').value,
+                category: document.getElementById('form-name').value.trim(),
+                price: parseFloat(document.getElementById('form-price').value),
+                shelfLife: parseInt(document.getElementById('form-shelflife').value) || 24,
+                stock: parseInt(document.getElementById('form-stock').value) || 500,
+                trials: 0,
+                rating: 5.0
+            };
+
+            if (state.products.some(p => p.id === newProduct.id)) {
+                showToast(`Product ID #${newProduct.id} already exists!`, 'error');
+                return;
+            }
+
+            state.products.unshift(newProduct);
+            closeAddProductModal();
+            renderVisitorProducts();
+            renderAdminAnalytics();
+            showToast(`Product #${newProduct.id} added to catalog!`, 'success');
+
+            try {
+                await fetch('http://localhost:8080/api/products', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newProduct)
+                });
+            } catch (err) {
+                // Expected if Server.java only implements GET
+            }
+        }
+
+        function deleteProduct(id) {
+            if (confirm(`Remove Product #${id} from launch floor?`)) {
+                state.products = state.products.filter(p => p.id !== id);
+                renderVisitorProducts();
+                renderAdminAnalytics();
+                showToast(`Product #${id} removed.`, 'info');
+            }
+        }
+
+        // --- Toast Notification Helper ---
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const colorClass = type === 'success' 
+                ? 'bg-green-500 text-white' 
+                : type === 'error' 
+                ? 'bg-red-500 text-white' 
+                : 'bg-black text-brandYellow';
+
+            toast.className = `vibrant-card ${colorClass} px-4 py-3 rounded-xl font-bold text-xs flex items-center gap-2 pointer-events-auto shadow-lg transition-all transform translate-y-0`;
+            toast.innerHTML = `
+                <i class="fa-solid ${type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-triangle-exclamation' : 'fa-info-circle'}"></i>
+                <span>${message}</span>
+            `;
+
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-10px)';
+                setTimeout(() => toast.remove(), 250);
+            }, 3200);
+        }
+
+        // --- Web Audio Synthesizer (No external mp3 assets required) ---
+        let audioCtx = null;
+        function getAudioContext() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            return audioCtx;
+        }
+
+        function playChimeSound(freq = 600, duration = 0.1) {
+            try {
+                const ctx = getAudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + duration);
+            } catch (e) {}
+        }
+
+        function playFanfareSound() {
+            try {
+                [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+                    setTimeout(() => playChimeSound(freq, 0.25), idx * 120);
+                });
+            } catch (e) {}
+        }
+
+        // --- Native Canvas Confetti Generator ---
+        function triggerConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#FF2A85', '#FFD600', '#0077FE', '#7B2CBF', '#10B981', '#FF6B00'];
+
+            for (let i = 0; i < 90; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    vx: (Math.random() - 0.5) * 14,
+                    vy: (Math.random() - 0.7) * 16,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    alpha: 1,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: (Math.random() - 0.5) * 8
+                });
+            }
+
+            function render() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.35; // gravity
+                    p.alpha -= 0.012;
+                    p.rotation += p.rotationSpeed;
+
+                    if (p.alpha > 0) {
+                        alive = true;
+                        ctx.save();
+                        ctx.globalAlpha = p.alpha;
+                        ctx.translate(p.x, p.y);
+                        ctx.rotate((p.rotation * Math.PI) / 180);
+                        ctx.fillStyle = p.color;
+                        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                        ctx.restore();
+                    }
+                });
+
+                if (alive) requestAnimationFrame(render);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        // --- Window Initialization ---
+        window.addEventListener('DOMContentLoaded', () => {
+            renderVisitorProducts('ALL');
+            initWheel();
+            fetchProductsFromApi();
+        });
+    </script>
+</body>
+
+</html>
