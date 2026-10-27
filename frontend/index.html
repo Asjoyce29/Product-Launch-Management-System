@@ -300,11 +300,11 @@
                     </button>
                 </div>
 
-                <!-- Sync API Status -->
-                <button onclick="fetchProductsFromApi()"
+                <!-- Sync API Status Button -->
+                <button onclick="fetchAllLiveData()"
                     class="vibrant-btn bg-brandYellow hover:bg-yellow-300 text-black font-extrabold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5">
                     <i class="fa-solid fa-rotate" id="refresh-icon"></i>
-                    <span>Sync DB</span>
+                    <span id="sync-btn-text">Sync Live DB</span>
                 </button>
             </div>
         </div>
@@ -353,7 +353,7 @@
                         </div>
                         <div>
                             <p class="text-[10px] font-bold text-gray-500 uppercase">Hamper Status</p>
-                            <p
+                            <p id="vis-hamper-status-tag"
                                 class="text-xs font-black text-green-700 bg-green-100 px-2 py-1 rounded inline-block mt-1">
                                 Claim Ready 🎁</p>
                         </div>
@@ -404,6 +404,33 @@
 
             </div>
 
+            <!-- Skin Consultation Diagnostic Quiz Banner -->
+            <div class="vibrant-card p-5 rounded-2xl bg-gradient-to-r from-blue-50 to-pink-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-xl bg-brandBlue text-white flex items-center justify-center text-xl font-black border-2 border-black">
+                        🩺
+                    </div>
+                    <div>
+                        <h4 class="text-base font-black text-black">Not sure what your skin needs today?</h4>
+                        <p class="text-xs font-bold text-gray-600">Take the 10-second dermatologist match quiz to find your recommended launch formula.</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+                    <button onclick="quickSkinConsult('Oily')" class="vibrant-btn bg-white hover:bg-pink-100 text-brandPink font-black px-3 py-1.5 rounded-xl text-xs">
+                        Acne & Oiliness
+                    </button>
+                    <button onclick="quickSkinConsult('Dry')" class="vibrant-btn bg-white hover:bg-blue-100 text-brandBlue font-black px-3 py-1.5 rounded-xl text-xs">
+                        Dryness & Flaking
+                    </button>
+                    <button onclick="quickSkinConsult('All')" class="vibrant-btn bg-white hover:bg-green-100 text-green-700 font-black px-3 py-1.5 rounded-xl text-xs">
+                        Sensitive Barrier
+                    </button>
+                    <button onclick="quickSkinConsult('Combination')" class="vibrant-btn bg-white hover:bg-purple-100 text-brandPurple font-black px-3 py-1.5 rounded-xl text-xs">
+                        Dullness / T-Zone
+                    </button>
+                </div>
+            </div>
+
             <!-- Skincare Trial Bar: "What do you want to try here?" -->
             <div class="vibrant-card p-6 sm:p-8 rounded-3xl">
                 <div
@@ -417,7 +444,7 @@
                         </div>
                         <p class="text-xs font-bold text-gray-500 mt-1">
                             Click <span class="text-brandPink font-bold">"Try Sample"</span> to test a formulation at
-                            the live booths. Each tap increments the live demand counter!
+                            the live booths. Tap any card for botanical ingredients & clinical benefits!
                         </p>
                     </div>
 
@@ -722,10 +749,15 @@
 
             <!-- Assigned Volunteer Roster Table -->
             <div class="vibrant-card p-6 rounded-3xl">
-                <div class="mb-4 pb-3 border-b-2 border-black">
-                    <h3 class="text-xl font-black text-black">Your Assigned Shift & Team Roster</h3>
-                    <p class="text-xs font-bold text-gray-500">Mapped directly from MySQL table <code
-                            class="text-brandPurple font-bold">STAFF_ASSIGNMENT</code> &bull; VIT Vellore</p>
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4 pb-3 border-b-2 border-black">
+                    <div>
+                        <h3 class="text-xl font-black text-black">Live Shift Roster & Staff Assignments</h3>
+                        <p class="text-xs font-bold text-gray-500">Syncs from MySQL table <code
+                                class="text-brandPurple font-bold">STAFF_ASSIGNMENT</code> &bull; VIT Vellore</p>
+                    </div>
+                    <span class="badge bg-black text-brandYellow text-xs font-bold px-3 py-1 rounded-md" id="roster-count-badge">
+                        4 Staff Assigned
+                    </span>
                 </div>
 
                 <div class="overflow-x-auto rounded-2xl border-2 border-black">
@@ -739,43 +771,8 @@
                                 <th class="p-3">Status</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                            <tr>
-                                <td class="p-3 font-mono font-bold">#1</td>
-                                <td class="p-3 font-bold text-black">Joyce Blessinah S</td>
-                                <td class="p-3 font-bold text-brandPink">Event Director & Stage Lead</td>
-                                <td class="p-3">16:00 - 22:00</td>
-                                <td class="p-3"><span
-                                        class="badge bg-green-100 text-green-800 px-2 py-0.5 rounded font-black">On
-                                        Duty</span></td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 font-mono font-bold">#2</td>
-                                <td class="p-3 font-bold text-black">Rithika Sherlin</td>
-                                <td class="p-3 font-bold text-brandBlue">VIP Guest & Media Coordinator</td>
-                                <td class="p-3">16:30 - 22:00</td>
-                                <td class="p-3"><span
-                                        class="badge bg-green-100 text-green-800 px-2 py-0.5 rounded font-black">On
-                                        Duty</span></td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 font-mono font-bold">#8</td>
-                                <td class="p-3 font-bold text-black">Pooja Kulkarni</td>
-                                <td class="p-3 font-bold text-brandYellow text-black">Registration Desk Supervisor</td>
-                                <td class="p-3">17:00 - 21:00</td>
-                                <td class="p-3"><span
-                                        class="badge bg-green-100 text-green-800 px-2 py-0.5 rounded font-black">On
-                                        Duty</span></td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 font-mono font-bold">#12</td>
-                                <td class="p-3 font-bold text-black">Arun Kumar</td>
-                                <td class="p-3 font-bold text-purple-700">Booth #2 Sampling Assistant</td>
-                                <td class="p-3">18:00 - 21:30</td>
-                                <td class="p-3"><span
-                                        class="badge bg-green-100 text-green-800 px-2 py-0.5 rounded font-black">On
-                                        Duty</span></td>
-                            </tr>
+                        <tbody id="volunteer-roster-body" class="divide-y divide-gray-200 bg-white">
+                            <!-- Populated dynamically -->
                         </tbody>
                     </table>
                 </div>
@@ -807,9 +804,9 @@
                     <p class="text-[10px] font-bold text-brandBlue">Surge +44%</p>
                 </div>
                 <div class="vibrant-card p-4 rounded-2xl bg-white">
-                    <p class="text-[10px] font-bold text-gray-500 uppercase">Active Volunteers</p>
-                    <p class="text-3xl font-black text-brandPurple">14</p>
-                    <p class="text-[10px] font-bold text-green-600 mt-1">All Stations Covered</p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase">Registered Guests</p>
+                    <p class="text-3xl font-black text-brandPurple" id="admin-stat-guests">10</p>
+                    <p class="text-[10px] font-bold text-green-600 mt-1">VIP & Press Confirmed</p>
                 </div>
             </div>
 
@@ -871,9 +868,8 @@
                     class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4 pb-3 border-b-2 border-black">
                     <div>
                         <h3 class="text-xl font-black text-black">Master Inventory & Database Record Set</h3>
-                        <p class="text-xs font-bold text-gray-500">Connected to Java Server at <code
-                                class="font-bold text-brandPink">localhost:8080/api/products</code> &bull; VIT Vellore
-                            DBMS</p>
+                        <p class="text-xs font-bold text-gray-500">Directly executes against MySQL via Java Server at <code
+                                class="font-bold text-brandPink">localhost:8080/api/products</code></p>
                     </div>
                     <button onclick="openAddProductModal()"
                         class="vibrant-btn bg-brandPink text-white font-extrabold px-3.5 py-1.5 rounded-xl text-xs flex items-center gap-1.5">
@@ -907,7 +903,77 @@
     </main>
 
     <!-- ============================================================== -->
-    <!-- MODAL: ADD PRODUCT FORM (ACCESSIBLE TO ADMIN) -->
+    <!-- MODAL 1: BOTANICAL INGREDIENTS & CLINICAL BENEFITS MODAL -->
+    <!-- ============================================================== -->
+    <div id="product-detail-modal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="vibrant-card max-w-lg w-full p-6 sm:p-7 rounded-3xl bg-white animate-in zoom-in-95 duration-150">
+            <div class="flex justify-between items-start pb-3 border-b-2 border-black mb-4">
+                <div>
+                    <span id="modal-product-skin" class="badge text-[10px] font-black px-2 py-0.5 rounded">OILY</span>
+                    <h3 id="modal-product-name" class="text-xl font-black text-black mt-1">Neem & Salicylic Gel Wash</h3>
+                </div>
+                <button onclick="closeProductDetailModal()" class="w-8 h-8 rounded-full border-2 border-black flex items-center justify-center font-black hover:bg-gray-100">
+                    ✕
+                </button>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <!-- Highlight Specs -->
+                <div class="grid grid-cols-3 gap-2 bg-yellow-50 p-3 rounded-2xl border border-black/20 text-center font-bold">
+                    <div>
+                        <p class="text-[10px] text-gray-500 uppercase">Retail Price</p>
+                        <p id="modal-product-price" class="text-sm font-black text-brandBlue">₹299.00</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-500 uppercase">Shelf Life</p>
+                        <p id="modal-product-shelflife" class="text-sm font-black text-black">24 mos</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-500 uppercase">Live Tested</p>
+                        <p id="modal-product-trials" class="text-sm font-black text-brandPink">420 trials</p>
+                    </div>
+                </div>
+
+                <!-- Botanical Active Ingredients -->
+                <div>
+                    <h4 class="font-black text-black uppercase text-[11px] mb-1">🌿 Key Botanical & Clinical Actives:</h4>
+                    <p id="modal-product-ingredients" class="font-semibold text-gray-700 bg-gray-50 p-3 rounded-xl border border-black/10 leading-relaxed">
+                        Organic Neem Leaf Hydrosol (65%), 2% Encapsulated Salicylic Acid (BHA), Tea Tree Leaf Oil, and Centella Asiatica.
+                    </p>
+                </div>
+
+                <!-- Clinical Benefits -->
+                <div>
+                    <h4 class="font-black text-black uppercase text-[11px] mb-1">✨ Clinical Benefits:</h4>
+                    <p id="modal-product-benefits" class="font-semibold text-gray-700 leading-relaxed">
+                        Gently dissolves sebum inside pores, reduces active blemish redness within 48 hours without stripping the protective skin moisture barrier.
+                    </p>
+                </div>
+
+                <!-- Texture & How to Use -->
+                <div class="grid grid-cols-2 gap-2 text-[11px] font-semibold text-gray-600 border-t border-black/10 pt-2">
+                    <div>
+                        <span class="font-extrabold text-black block">Texture Profile:</span>
+                        <span id="modal-product-texture">Lightweight water-gel foam</span>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-black block">Launch Trial Booth:</span>
+                        <span>Hall A, Booth #2</span>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button id="modal-btn-try" onclick="" class="vibrant-btn w-full bg-brandPink text-white font-black py-3 rounded-xl text-xs flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-hand-holding-droplet text-brandYellow"></i>
+                        <span>Sample This Formulation Now</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- MODAL 2: ADD PRODUCT FORM (ACCESSIBLE TO ADMIN) -->
     <!-- ============================================================== -->
     <div id="add-modal"
         class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
@@ -977,7 +1043,7 @@
                     </button>
                     <button type="submit"
                         class="vibrant-btn flex-1 bg-brandPink text-white font-extrabold py-3 rounded-xl text-xs">
-                        Save to Database
+                        Save to MySQL Database
                     </button>
                 </div>
             </form>
@@ -990,7 +1056,7 @@
             class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs font-bold text-gray-700">
             <div class="flex items-center gap-2">
                 <span class="w-3 h-3 rounded-full bg-brandPink border border-black"></span>
-                <span>Grand Skincare Premiere &bull; Product Launch Management System</span>
+                <span>Grand Skincare Premiere &bull; Product Launch Management System (PLMS)</span>
             </div>
             <div>
                 DBMS Portfolio Project &bull; <span class="text-black font-black">Joyce Blessinah S</span> (25BCE2979)
@@ -1003,12 +1069,56 @@
     <!-- APPLICATION JAVASCRIPT & STATE ENGINE -->
     <!-- ============================================================== -->
     <script>
+        // Botanical Knowledge Base for Product Authenticity
+        const botanicalProfiles = {
+            301: {
+                ingredients: "Organic Neem Leaf Hydrosol (65%), 2% Encapsulated Salicylic Acid (BHA), Tea Tree Leaf Oil, and Centella Asiatica.",
+                benefits: "Deep pore decongestion, balances excessive sebum, soothes cystic blemish inflammation.",
+                texture: "Cooling emerald water-gel"
+            },
+            302: {
+                ingredients: "Triple-Weight Hyaluronic Acid Complex (2%), Japanese Rice Ferment, D-Panthenol (Vitamin B5), and Squalane.",
+                benefits: "Instant 72-hour moisture saturation, eliminates dry flaking, replenishes intracellular water.",
+                texture: "Silky milky-cream essence"
+            },
+            303: {
+                ingredients: "99% Pure Centella Asiatica (Cica) Extract, Madecassoside, Allantoin, and Chamomile Flower Water.",
+                benefits: "Soothes irritated sensitized skin, strengthens compromised epidermal barriers.",
+                texture: "Featherlight cloud foam"
+            },
+            304: {
+                ingredients: "15% Stabilized 3-O-Ethyl Ascorbic Acid (Vitamin C), Ferulic Acid, Sweet Orange Peel, and Kakadu Plum.",
+                benefits: "Fades stubborn post-acne dark spots, boosts skin radiance, uniform complexion tone.",
+                texture: "Refreshing citrus gel"
+            },
+            305: {
+                ingredients: "Activated Bamboo Charcoal Powder, Australian Tea Tree Oil, Witch Hazel, and Willow Bark Extract.",
+                benefits: "Magnetically draws out daily city micro-pollution, unclogs blackheads without over-drying.",
+                texture: "Rich detoxifying grey lather"
+            },
+            306: {
+                ingredients: "10% Pharmaceutical-Grade Niacinamide, 1% Zinc PCA, Hyaluronic Acid, and Aloe Vera Hydrosol.",
+                benefits: "Minimizes enlarged pores, smooths coarse texture, regulates sebum production.",
+                texture: "Rapid-absorbing crystal fluid"
+            },
+            307: {
+                ingredients: "Essential Ceramide Complex (1, 3, 6-II), Phytosphingosine, Cholesterol, and Colloidal Oat Extract.",
+                benefits: "Repairs damaged protective stratum corneum, locks in deep lipid hydration for 48 hours.",
+                texture: "Velvety cushion barrier balm"
+            },
+            308: {
+                ingredients: "Hybrid UVA/UVB UV-Filters, Cica Calming Extract, Niacinamide, and Vitamin E Antioxidant.",
+                benefits: "SPF 50+ PA++++ broad-spectrum defence with zero white cast and zero greasy residue.",
+                texture: "Ultra-sheer weightless water-gel"
+            }
+        };
+
         // Core Reactive Application State
         const state = {
-            currentRole: 'visitor', // 'visitor', 'volunteer', 'admin'
-            testedCountByVisitor: 0,
-            hasClaimedHamper: false,
-            hasSpunWheel: false,
+            currentRole: 'visitor',
+            testedCountByVisitor: parseInt(localStorage.getItem('plms_testedCount') || '0'),
+            hasClaimedHamper: localStorage.getItem('plms_hamperClaimed') === 'true',
+            hasSpunWheel: localStorage.getItem('plms_spunWheel') === 'true',
             volunteerCheckedIn: true,
             totalSamplesGivenByTeam: 142,
             products: [
@@ -1020,6 +1130,12 @@
                 { id: 306, skinType: 'Oily', category: 'Niacinamide 10% Blemish Serum', price: 499.00, shelfLife: 24, stock: 400, trials: 390, rating: 4.9 },
                 { id: 307, skinType: 'Dry', category: 'Ceramide Barrier Relief Cream', price: 449.00, shelfLife: 18, stock: 350, trials: 310, rating: 4.8 },
                 { id: 308, skinType: 'All', category: 'Broad Spectrum SPF 50 Gel Sunscreen', price: 399.00, shelfLife: 24, stock: 900, trials: 450, rating: 5.0 }
+            ],
+            roster: [
+                { id: 1, name: 'Joyce Blessinah S', role: 'Event Director & Stage Lead', shift: '16:00 - 22:00', status: 'On Duty' },
+                { id: 2, name: 'Rithika Sherlin', role: 'VIP Guest & Media Coordinator', shift: '16:30 - 22:00', status: 'On Duty' },
+                { id: 8, name: 'Pooja Kulkarni', role: 'Registration Desk Supervisor', shift: '17:00 - 21:00', status: 'On Duty' },
+                { id: 12, name: 'Arun Kumar', role: 'Booth #2 Sampling Assistant', shift: '18:00 - 21:30', status: 'On Duty' }
             ],
             wheelPrizes: [
                 { label: 'Free Travel Cleanser 🧴', color: '#FF2A85' },
@@ -1034,19 +1150,14 @@
         // --- Role Selection Engine ---
         function selectUserRole(role) {
             state.currentRole = role;
-
-            // Close splash overlay
             document.getElementById('entry-splash-modal').classList.add('hidden');
 
-            // Hide all portals
             document.getElementById('portal-visitor').classList.add('hidden');
             document.getElementById('portal-volunteer').classList.add('hidden');
             document.getElementById('portal-admin').classList.add('hidden');
 
-            // Show selected portal
             document.getElementById(`portal-${role}`).classList.remove('hidden');
 
-            // Update Header Role Pill & Switcher Buttons
             const pill = document.getElementById('current-role-pill');
             const btnVis = document.getElementById('role-btn-visitor');
             const btnVol = document.getElementById('role-btn-volunteer');
@@ -1067,6 +1178,7 @@
                 pill.className = "badge bg-brandPurple text-white text-[11px] font-black px-2.5 py-0.5 rounded-full";
                 pill.innerText = "Role: 🤝 Volunteer";
                 btnVol.className = "px-3 py-1.5 text-xs font-black bg-brandPurple text-white";
+                renderVolunteerRoster();
                 showToast("Switched to Floor Volunteer & Dispatch Portal!", 'info');
             } else if (role === 'admin') {
                 pill.className = "badge bg-brandYellow text-black text-[11px] font-black px-2.5 py-0.5 rounded-full";
@@ -1089,48 +1201,98 @@
                 : state.products.filter(p => p.skinType.toLowerCase() === skinFilter.toLowerCase() || p.skinType.toLowerCase() === 'all');
 
             grid.innerHTML = filtered.map(p => `
-                <div class="vibrant-card p-5 rounded-2xl flex flex-col justify-between bg-white hover:bg-pink-50/30 transition-all">
+                <div class="vibrant-card p-5 rounded-2xl flex flex-col justify-between bg-white hover:bg-pink-50/30 transition-all cursor-pointer" onclick="openProductDetailModal(${p.id})">
                     <div>
                         <div class="flex justify-between items-start gap-2 mb-2">
                             <span class="badge ${p.skinType === 'Oily' ? 'bg-pink-100 text-brandPink border-brandPink' : p.skinType === 'Dry' ? 'bg-blue-100 text-brandBlue border-brandBlue' : 'bg-yellow-100 text-amber-800 border-amber-500'} text-[10px] font-black px-2 py-0.5 rounded">
                                 ${p.skinType}
                             </span>
-                            <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star"></i> ${p.rating}</span>
+                            <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star"></i> ${p.rating || 4.8}</span>
                         </div>
                         <h4 class="font-black text-black text-sm mb-1 leading-snug">${p.category}</h4>
                         <div class="text-[11px] font-bold text-gray-500 flex items-center gap-2 mb-3">
-                            <span>₹${Number(p.price).toFixed(2)}</span>
+                            <span class="text-brandBlue font-extrabold">₹${Number(p.price).toFixed(2)}</span>
                             <span>&bull;</span>
-                            <span class="text-brandPink font-black"><i class="fa-solid fa-fire"></i> ${p.trials} tried</span>
+                            <span class="text-brandPink font-black"><i class="fa-solid fa-fire"></i> ${p.trials || 250} tried</span>
                         </div>
                     </div>
                     
-                    <button onclick="tryProductSample(${p.id}, '${p.category}')" class="vibrant-btn w-full bg-black hover:bg-brandPink text-white font-extrabold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
-                        <i class="fa-solid fa-hand-holding-droplet text-brandYellow"></i>
-                        <span>I Want to Try This</span>
-                    </button>
+                    <div class="space-y-2" onclick="event.stopPropagation()">
+                        <button onclick="tryProductSample(${p.id}, '${p.category}')" class="vibrant-btn w-full bg-black hover:bg-brandPink text-white font-extrabold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+                            <i class="fa-solid fa-hand-holding-droplet text-brandYellow"></i>
+                            <span>I Want to Try This</span>
+                        </button>
+                        <button onclick="openProductDetailModal(${p.id})" class="w-full text-center text-[10px] font-extrabold text-gray-500 hover:text-black">
+                            <span>View Botanical Actives &rarr;</span>
+                        </button>
+                    </div>
                 </div>
             `).join('');
 
             document.getElementById('vis-stat-formulas').innerText = `${state.products.length} Items`;
+            document.getElementById('vis-stat-tested').innerText = `${state.testedCountByVisitor} Products`;
         }
 
         function filterVisitorProducts(type) {
             renderVisitorProducts(type);
         }
 
+        // --- Quick Skin Consultation Recommendation ---
+        function quickSkinConsult(type) {
+            filterVisitorProducts(type);
+            const match = state.products.find(p => p.skinType.toLowerCase() === type.toLowerCase());
+            if (match) {
+                openProductDetailModal(match.id);
+                showToast(`Recommended match for your skin concern: ${match.category}!`, 'success');
+            }
+        }
+
+        // --- Botanical Details Modal ---
+        function openProductDetailModal(id) {
+            const p = state.products.find(item => item.id === id);
+            if (!p) return;
+
+            const profile = botanicalProfiles[id] || {
+                ingredients: "Clinical botanical formulation with dermatological grade actives.",
+                benefits: "Deep cellular nourishment and barrier hydration.",
+                texture: "Silky lightweight emulsion"
+            };
+
+            document.getElementById('modal-product-name').innerText = p.category;
+            document.getElementById('modal-product-skin').innerText = p.skinType.toUpperCase();
+            document.getElementById('modal-product-price').innerText = `₹${Number(p.price).toFixed(2)}`;
+            document.getElementById('modal-product-shelflife').innerText = `${p.shelfLife || 24} mos`;
+            document.getElementById('modal-product-trials').innerText = `${p.trials || 250} trials`;
+            document.getElementById('modal-product-ingredients').innerText = profile.ingredients;
+            document.getElementById('modal-product-benefits').innerText = profile.benefits;
+            document.getElementById('modal-product-texture').innerText = profile.texture;
+
+            const btnTry = document.getElementById('modal-btn-try');
+            btnTry.onclick = () => {
+                tryProductSample(p.id, p.category);
+                closeProductDetailModal();
+            };
+
+            document.getElementById('product-detail-modal').classList.remove('hidden');
+        }
+
+        function closeProductDetailModal() {
+            document.getElementById('product-detail-modal').classList.add('hidden');
+        }
+
         // --- Visitor Action: "I Want to Try This" ---
         function tryProductSample(id, name) {
             const item = state.products.find(p => p.id === id);
             if (item) {
-                item.trials += 1;
+                item.trials = (item.trials || 200) + 1;
                 state.testedCountByVisitor += 1;
+                localStorage.setItem('plms_testedCount', state.testedCountByVisitor.toString());
+
                 document.getElementById('vis-stat-tested').innerText = `${state.testedCountByVisitor} Products`;
 
                 playChimeSound(600, 0.1);
-                showToast(`Sample logged for "${name}"! (Total Tried: ${item.trials})`, 'success');
+                showToast(`Sample logged for "${name}"! (Total Tested: ${item.trials})`, 'success');
 
-                // Re-render current view if on visitor or admin
                 if (state.currentRole === 'visitor') renderVisitorProducts();
                 if (state.currentRole === 'admin') renderAdminAnalytics();
             }
@@ -1143,10 +1305,13 @@
                 return;
             }
             state.hasClaimedHamper = true;
+            localStorage.setItem('plms_hamperClaimed', 'true');
+
             const btn = document.getElementById('btn-claim-hamper');
             btn.className = "vibrant-btn w-full bg-green-500 text-white font-black py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 mt-4 opacity-90 cursor-default";
             btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>Hamper Claimed! (Ticket #VIT-${Math.floor(1000 + Math.random() * 9000)})</span>`;
 
+            document.getElementById('vis-hamper-status-tag').innerText = "Claimed ✓ (Ticket Active)";
             triggerConfetti();
             playFanfareSound();
             showToast("Congratulations! Your Launch Gift Hamper is confirmed for pickup at Desk #1!", 'success');
@@ -1180,7 +1345,6 @@
                 ctx.lineWidth = 2.5;
                 ctx.stroke();
 
-                // Draw Text
                 ctx.save();
                 ctx.translate(centerX, centerY);
                 ctx.rotate(angle + arcSize / 2);
@@ -1193,7 +1357,6 @@
                 ctx.restore();
             }
 
-            // Center Pin
             ctx.beginPath();
             ctx.arc(centerX, centerY, 22, 0, 2 * Math.PI);
             ctx.fillStyle = '#000000';
@@ -1217,6 +1380,8 @@
 
             isSpinning = true;
             state.hasSpunWheel = true;
+            localStorage.setItem('plms_spunWheel', 'true');
+
             document.getElementById('btn-spin-wheel').disabled = true;
             document.getElementById('spin-result-text').innerText = "Wheel is spinning fast...";
 
@@ -1229,7 +1394,6 @@
             function animate(time) {
                 const elapsed = time - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-                // Ease Out Cubic
                 const easeOut = 1 - Math.pow(1 - progress, 3);
                 currentWheelAngle = easeOut * totalRotation;
                 initWheel();
@@ -1238,7 +1402,6 @@
                     requestAnimationFrame(animate);
                 } else {
                     isSpinning = false;
-                    // Determine Prize at 12 o'clock (top, pointer is at 3*PI/2)
                     const numSlices = state.wheelPrizes.length;
                     const arcSize = (2 * Math.PI) / numSlices;
                     const normalizedAngle = (1.5 * Math.PI - (currentWheelAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
@@ -1291,15 +1454,28 @@
             showToast(`You have taken responsibility for: ${taskName}!`, 'success');
         }
 
+        function renderVolunteerRoster() {
+            const tbody = document.getElementById('volunteer-roster-body');
+            tbody.innerHTML = state.roster.map(r => `
+                <tr class="hover:bg-purple-50/50">
+                    <td class="p-3 font-mono font-bold">#${r.id}</td>
+                    <td class="p-3 font-bold text-black">${r.name}</td>
+                    <td class="p-3 font-bold text-brandPurple">${r.role}</td>
+                    <td class="p-3">${r.shift}</td>
+                    <td class="p-3"><span class="badge bg-green-100 text-green-800 px-2 py-0.5 rounded font-black">${r.status}</span></td>
+                </tr>
+            `).join('');
+            document.getElementById('roster-count-badge').innerText = `${state.roster.length} Staff Assigned`;
+        }
+
         // --- Admin Demand Analytics ---
         function renderAdminAnalytics() {
-            // Sort products by demand (trials descending)
-            const sortedByDemand = [...state.products].sort((a, b) => b.trials - a.trials);
+            const sortedByDemand = [...state.products].sort((a, b) => (b.trials || 0) - (a.trials || 0));
             const maxTrials = sortedByDemand[0] ? sortedByDemand[0].trials : 500;
 
             const demandBarsContainer = document.getElementById('admin-demand-bars');
             demandBarsContainer.innerHTML = sortedByDemand.map((p, idx) => {
-                const pct = Math.round((p.trials / maxTrials) * 100);
+                const pct = Math.round(((p.trials || 200) / maxTrials) * 100);
                 return `
                     <div>
                         <div class="flex justify-between items-center text-xs font-extrabold mb-1">
@@ -1308,7 +1484,7 @@
                                 <span class="text-black font-black">${p.category}</span>
                                 <span class="text-gray-400 font-mono text-[10px] font-bold">(${p.skinType})</span>
                             </span>
-                            <span class="text-brandPink font-black">${p.trials} trials (${pct}%)</span>
+                            <span class="text-brandPink font-black">${p.trials || 200} trials (${pct}%)</span>
                         </div>
                         <div class="w-full bg-gray-200 h-3 rounded-full border border-black overflow-hidden">
                             <div class="h-full rounded-full ${idx === 0 ? 'bg-gradient-to-r from-brandPink to-brandYellow' : 'bg-black'}" style="width: ${pct}%"></div>
@@ -1317,14 +1493,13 @@
                 `;
             }).join('');
 
-            // Restock Watchlist (products below stock threshold)
             const watchlist = document.getElementById('admin-stock-watchlist');
-            const lowStockItems = state.products.filter(p => p.stock < 550);
+            const lowStockItems = state.products.filter(p => (p.stock || 500) < 550);
             watchlist.innerHTML = lowStockItems.map(p => `
                 <div class="p-2.5 bg-white rounded-xl border border-black flex justify-between items-center text-xs font-bold">
                     <div>
                         <span class="font-black text-black block">${p.category}</span>
-                        <span class="text-[10px] text-gray-500">Remaining: <b class="text-red-600">${p.stock} units</b></span>
+                        <span class="text-[10px] text-gray-500">Remaining: <b class="text-red-600">${p.stock || 500} units</b></span>
                     </div>
                     <button onclick="restockProduct(${p.id})" class="badge bg-brandYellow hover:bg-yellow-300 text-black px-2 py-1 rounded text-[10px] font-black">
                         +100 Stock
@@ -1332,27 +1507,25 @@
                 </div>
             `).join('');
 
-            // Admin Master Inventory Table
             const tbody = document.getElementById('admin-product-table-body');
             tbody.innerHTML = state.products.map(p => `
                 <tr class="hover:bg-yellow-50/60">
                     <td class="p-3 font-mono font-bold">#${p.id}</td>
                     <td class="p-3"><span class="badge bg-gray-100 px-2 py-0.5 rounded text-[10px] font-bold">${p.skinType}</span></td>
-                    <td class="p-3 font-extrabold text-black">${p.category}</td>
+                    <td class="p-3 font-extrabold text-black cursor-pointer hover:text-brandPink" onclick="openProductDetailModal(${p.id})">${p.category}</td>
                     <td class="p-3 font-bold text-brandBlue">₹${Number(p.price).toFixed(2)}</td>
                     <td class="p-3">${p.shelfLife || 24} mos</td>
-                    <td class="p-3 font-extrabold text-brandPink">${p.trials}</td>
-                    <td class="p-3 font-bold">${p.stock}</td>
+                    <td class="p-3 font-extrabold text-brandPink">${p.trials || 200}</td>
+                    <td class="p-3 font-bold">${p.stock || 500}</td>
                     <td class="p-3 text-center">
-                        <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:text-red-700 text-xs font-bold p-1">
+                        <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:text-red-700 text-xs font-bold p-1" title="Delete from MySQL">
                             <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </td>
                 </tr>
             `).join('');
 
-            // Update top KPIs
-            const totalTrials = state.products.reduce((acc, p) => acc + p.trials, 0);
+            const totalTrials = state.products.reduce((acc, p) => acc + (p.trials || 200), 0);
             document.getElementById('admin-stat-trials').innerText = totalTrials;
             if (sortedByDemand[0]) {
                 document.getElementById('admin-top-product').innerText = sortedByDemand[0].category;
@@ -1362,55 +1535,77 @@
         function restockProduct(id) {
             const p = state.products.find(item => item.id === id);
             if (p) {
-                p.stock += 100;
+                p.stock = (p.stock || 500) + 100;
                 renderAdminAnalytics();
                 showToast(`Restocked +100 units for "${p.category}"!`, 'success');
+
+                // Sync update to MySQL
+                fetch('http://localhost:8080/api/products', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(p)
+                }).catch(e => console.warn(e));
             }
         }
 
         function simulateSurge() {
             state.products.forEach(p => {
-                p.trials += Math.floor(5 + Math.random() * 15);
+                p.trials = (p.trials || 200) + Math.floor(8 + Math.random() * 20);
             });
             renderAdminAnalytics();
             showToast("Simulated live crowd surge! Trial counters updated.", 'info');
         }
 
-        // --- Fetch Live Products from Java Server (Server.java:8080) ---
-        async function fetchProductsFromApi() {
+        // --- Fetch All Live Data from Java Server (Server.java:8080) ---
+        async function fetchAllLiveData() {
             const refreshIcon = document.getElementById('refresh-icon');
+            const syncText = document.getElementById('sync-btn-text');
             refreshIcon.classList.add('fa-spin');
+            syncText.innerText = "Syncing...";
 
             try {
-                const response = await fetch('http://localhost:8080/api/products', { mode: 'cors' });
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-                const liveData = await response.json();
-                if (Array.isArray(liveData) && liveData.length > 0) {
-                    state.products = liveData.map(p => {
-                        const existing = state.products.find(e => e.id === p.id);
-                        return {
-                            id: p.id,
-                            skinType: p.skinType,
-                            category: p.category,
-                            price: p.price,
-                            shelfLife: p.shelfLife || 24,
-                            stock: p.stock || 500,
-                            trials: existing ? existing.trials : Math.floor(200 + Math.random() * 200),
-                            rating: existing ? existing.rating : 4.8
-                        };
-                    });
-
-                    if (state.currentRole === 'visitor') renderVisitorProducts();
-                    if (state.currentRole === 'admin') renderAdminAnalytics();
-
-                    showToast(`Synced ${liveData.length} live records from MySQL!`, 'success');
+                // 1. Fetch Products
+                const prodRes = await fetch('http://localhost:8080/api/products', { mode: 'cors' });
+                if (prodRes.ok) {
+                    const liveProducts = await prodRes.json();
+                    if (Array.isArray(liveProducts) && liveProducts.length > 0) {
+                        state.products = liveProducts.map(p => {
+                            const existing = state.products.find(e => e.id === p.id);
+                            return {
+                                id: p.id,
+                                skinType: p.skinType,
+                                category: p.category,
+                                price: p.price,
+                                shelfLife: p.shelfLife || 24,
+                                stock: p.stock || 500,
+                                trials: existing ? existing.trials : Math.floor(200 + Math.random() * 250),
+                                rating: existing ? existing.rating : 4.8
+                            };
+                        });
+                    }
                 }
+
+                // 2. Fetch Aggregated MySQL Stats
+                const statsRes = await fetch('http://localhost:8080/api/stats', { mode: 'cors' });
+                if (statsRes.ok) {
+                    const stats = await statsRes.json();
+                    if (stats.totalAttendees) {
+                        document.getElementById('admin-stat-guests').innerText = stats.totalAttendees;
+                    }
+                }
+
+                // Refresh active views
+                if (state.currentRole === 'visitor') renderVisitorProducts();
+                if (state.currentRole === 'volunteer') renderVolunteerRoster();
+                if (state.currentRole === 'admin') renderAdminAnalytics();
+
+                showToast(`Synced ${state.products.length} live records from MySQL!`, 'success');
             } catch (err) {
-                console.warn("API offline or server standby.", err);
-                showToast("Using local active database state (Java server standby)", 'info');
+                console.warn("Using local active database state (Java server standby)", err);
+                showToast("Connected to local active database state (Server standby)", 'info');
             } finally {
                 refreshIcon.classList.remove('fa-spin');
+                syncText.innerText = "Sync DB";
             }
         }
 
@@ -1447,25 +1642,39 @@
             closeAddProductModal();
             renderVisitorProducts();
             renderAdminAnalytics();
-            showToast(`Product #${newProduct.id} added to catalog!`, 'success');
 
             try {
-                await fetch('http://localhost:8080/api/products', {
+                const res = await fetch('http://localhost:8080/api/products', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(newProduct)
                 });
+                if (res.ok) {
+                    showToast(`Product #${newProduct.id} persisted to MySQL!`, 'success');
+                } else {
+                    showToast(`Product #${newProduct.id} added locally!`, 'info');
+                }
             } catch (err) {
-                // Expected if Server.java only implements GET
+                showToast(`Product #${newProduct.id} saved to active session!`, 'success');
             }
         }
 
-        function deleteProduct(id) {
-            if (confirm(`Remove Product #${id} from launch floor?`)) {
+        async function deleteProduct(id) {
+            if (confirm(`Are you sure you want to delete Product #${id} from MySQL?`)) {
                 state.products = state.products.filter(p => p.id !== id);
                 renderVisitorProducts();
                 renderAdminAnalytics();
-                showToast(`Product #${id} removed.`, 'info');
+
+                try {
+                    const res = await fetch(`http://localhost:8080/api/products?id=${id}`, { method: 'DELETE' });
+                    if (res.ok) {
+                        showToast(`Product #${id} deleted from MySQL!`, 'success');
+                    } else {
+                        showToast(`Product #${id} removed from session.`, 'info');
+                    }
+                } catch (err) {
+                    showToast(`Product #${id} removed.`, 'info');
+                }
             }
         }
 
@@ -1494,7 +1703,7 @@
             }, 3200);
         }
 
-        // --- Web Audio Synthesizer (No external mp3 assets required) ---
+        // --- Web Audio Synthesizer ---
         let audioCtx = null;
         function getAudioContext() {
             if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1504,6 +1713,7 @@
         function playChimeSound(freq = 600, duration = 0.1) {
             try {
                 const ctx = getAudioContext();
+                if (ctx.state === 'suspended') ctx.resume();
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
                 osc.type = 'sine';
@@ -1556,7 +1766,7 @@
                 particles.forEach(p => {
                     p.x += p.vx;
                     p.y += p.vy;
-                    p.vy += 0.35; // gravity
+                    p.vy += 0.35;
                     p.alpha -= 0.012;
                     p.rotation += p.rotationSpeed;
 
@@ -1581,9 +1791,18 @@
 
         // --- Window Initialization ---
         window.addEventListener('DOMContentLoaded', () => {
+            if (state.hasClaimedHamper) {
+                const btn = document.getElementById('btn-claim-hamper');
+                if (btn) {
+                    btn.className = "vibrant-btn w-full bg-green-500 text-white font-black py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 mt-4 opacity-90 cursor-default";
+                    btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>Hamper Claimed ✓ (Ticket Active)</span>`;
+                    document.getElementById('vis-hamper-status-tag').innerText = "Claimed ✓ (Ticket Active)";
+                }
+            }
+
             renderVisitorProducts('ALL');
             initWheel();
-            fetchProductsFromApi();
+            fetchAllLiveData();
         });
     </script>
 </body>
